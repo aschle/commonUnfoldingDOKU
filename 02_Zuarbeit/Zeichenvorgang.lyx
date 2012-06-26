@@ -1,0 +1,153 @@
+#LyX file created by tex2lyx 2.0.0
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass scrartcl
+\use_default_options false
+\language ngerman
+\inputencoding latin9
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\paperfontsize default
+\spacing single
+\use_hyperref 0
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language german
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\end_header
+
+\begin_body
+
+\begin_layout Section*
+
+Zeichenvorgang
+\end_layout
+
+\begin_layout Subsection*
+
+Überblick
+\end_layout
+
+\begin_layout Standard
+
+Alle Zeichenvorgänge gehen von einer Benutzereingabe auf der Hauptzeichenfläche aus, auch beim Zeichnen auf den Schachtel-Zeichenflächen wird ein entsprechendes Ereignis auf der Hauptfläche ausgelöst, welches in der draw-Methode des DrawingCanvas-Objektes behandelt wird.
+\end_layout
+
+\begin_layout Standard
+
+Von den x- und y-Koordinaten dieses Ereignisses ausgehend wird von jeder Schachtel-Zeichenfläche die Funktion prepare(x, y) aufgerufen.
+\end_layout
+
+\begin_layout Standard
+
+In den Zeichenflächen werden die Koordinaten berechnet, die, beim aktuellen Zeichenvorgang, dem Punkt auf der Hauptfläche entsprechen. Zusätzlich wird angegeben ob dieser Punkt auf der Schachtel-Zeichenfläche bereits existiert. Falls es auf einer Fläche nicht möglich seien sollte entsprechende Koordinaten zu berechnen, wird der Zeichenvorgang abgebrochen.
+\end_layout
+
+\begin_layout Standard
+
+Falls in den berechneten Schachtel-Koordinaten Konflikte aufgetreten sind, also Punkte auf den Schachtelflächen bereits vorhanden sind, und das Überschreiben aktiviert ist, werden die bereits vorhandenen Punkte und ihre entsprechenden Punkte auf den anderen Zeichenflächen gelöscht. Ein auf der Hauptzeichenfläche bereits vorhandener Punkt wird ebenso behandelt. Sollte Überschreiben nicht aktiviert sein muss der Zeichenvorgang bei vorhandenen Konflikten abgebrochen werden.
+\end_layout
+
+\begin_layout Standard
+
+Nachdem nun mögliche Konflikte behoben sind können alle berechneten Punkte gezeichnet werden.
+\end_layout
+
+\begin_layout Subsection*
+
+Berechnen der Schachtel-Koordinaten
+\end_layout
+
+\begin_layout Standard
+
+In der Funktion prepare(x, y) der BoxCanvas-Objekte wird von den x-, y-Koordinaten der Hauptzeichenfläche ausgehend die Koordinaten des entsprechenden Punktes der Schachtel-Zeichenfläche berechnet.
+\end_layout
+
+\begin_layout Standard
+
+Ausgehend vom Startpunkt der Schachtelfläche wird eine Verschiebung der Koordinaten addiert. Falls z. B. der Startpunkt der Hauptfläche 
+\begin_inset Formula $(100|100)$
+\end_inset
+
+ ist und der Startpunkt der Schachtelfläche 
+\begin_inset Formula $(200|300)$
+\end_inset
+
+, so ergibt sich 
+\begin_inset Formula $(x+100|y+200)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+Zu jeder Schachtelfläche gehört eine Liste traversed_edges, in der die im aktuellen Zeichenvorgang überquerten Kanten gespeichert werden. Nun wird nacheinander die traverse-Funktion der Kanten für die x-, y-Koordinaten aufgerufen.
+\end_layout
+
+\begin_layout Standard
+
+Nun muss festgestellt werden, ob der berechnete Punkt wiederum außerhalb der Schachtel liegt, ob also eine weitere Kante überquert wurde, oder ob der Punkt innerhalb der Schachtel liegt. Dazu werden Orientierungstest mit den Eckpunkten der beiden Rechtecke, die die Schachtelfläche bilden ausgeführt (Funktion is_inside(x, y)).
+\end_layout
+
+\begin_layout Standard
+
+Falls der Punkt außerhalb liegt und im aktuellen Zeichenvorgang bereits ein Punkt gezeichnet wurde, also ein gültiger Referenzpunkt vorliegt, wird die zwischen den beiden Punkten liegende Kante festgestellt. Für diese Kante wird ebenfalls die traverse-Funktion aufgerufen, wodurch wir wiederum neue Koordinaten erhalten.
+\end_layout
+
+\begin_layout Standard
+
+Falls kein Referenzpunkt vorhanden ist, kann kein gültiger Punkt berechnet werden.
+\end_layout
+
+\begin_layout Standard
+
+Nun haben wir also gültige Koordinaten für einen auf der Schachtel liegenden Punkt und möglicherweise eine neu überquerte Kante (sollte der Punkt schließlich gezeichnet werden, wird diese Kante zur Liste der Überquerten hinzugefügt). Jetzt wird noch geprüft ob der berechnete Punkt bereits gezeichnet wurde. Diese Information wird zusammen mit den berechneten Koordinaten zurückgegeben.
+\end_layout
+
+\begin_layout Subsection*
+
+Automatisches Auffüllen
+\end_layout
+
+\begin_layout Standard
+
+Falls auf einer Schachtelfläche ein Punkt gelöscht wird (z. B. aufgrund von Überschreibung), wird dieser Löschvorgang gespeichert. Nachdem der aktuelle Punkt gezeichnet wurde, werden die gelöschten Punkt überprüft. Falls ein Punkt tatsächlich gelöscht wurde, also kein neuer Punkt an der gleichen Stelle gezeichnet wurde, wird in der Funktion get_autofill geprüft, ob auf der entsprechenden Zeichenfläche in der näheren Umgebung bereits gezeichnet wurde. Die Anzahl der überprüften Pixel ist abhängig von der eingestellten Zeichenbreite.
+\end_layout
+
+\begin_layout Standard
+
+Falls ein entsprechender Punkt gefunden wird, wird von diesem aus 
+\begin_inset Quotes eld
+\end_inset
+
+aufgefüllt
+\begin_inset Quotes erd
+\end_inset
+
+. Der gelöschte Punkt wird also so gezeichnet, als wäre er im gleichen Zeichenvorgang entstanden wie der bereits vorhandene Punkt. 
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,58 @@
+startpunkte (startpoint_dialog, startpoint_main)
+
+Startpunkte auf Boxen im startpoint_dialog mit Mausklick oder in Spinnbox, box_canvas.offset wird angepasst
+Startpunkte auf drawing_canvas mit mausklick auf Zeichenfläche in startpoint_main. startpunkt wird von allen box_canvas.offset's subtrahiert
+
+
+undo/redo (undoable)
+
+bei draw werden sich alle punkte x,y gespeichrt, wenn vorher gezeichneter punkt gelöscht wird, werden alle dazugehörigen pixel auf den Boxen und der Zeichenfläche gespeichert
+zusätzlich wird der anfangsstatus gespeichet mit overide, autofill, countinue_draw und anfangs überquerten  kanten auf den Boxen
+bei undo werden alle diese punkte mit drawing_canvas.erase gelöscht und in der redoliste gespeichert
+anschließend werden die durch diese gelöschten pixel vorher überschriebenen pixel wiederhergestellt
+
+bei redo wird ein erneutes zeichnen auf der zeichenfläche mit hilfe von my_event simuliert
+
+
+Speichern/Laden (save_load)
+
+eine modifzierte Undo-Liste wird abgespeichert als CommonUnfoldFile [*.cuf]
+
+CommonUnfoldFile:
+
+int: Anzahl der Boxen
+Quadtrupel für jede box:  (höhe,breite,tiefe,rotation) 
+tupel für jede box: boxstartpunkt(x,y)
+tupel: Zeichenflächenstartpunkt (x,y)
+int: Anzahl der gezeichneten Linien (Linie endet nach Mausrelease)
+für jede linie:{
+int: anzahl der Pixel
+Boolean: war overwrite aktiv
+Boolean: war autofill aktiv
+Boolean: war continu line aktiv
+Liste von Kanten für jede Box als Start boxes.traversed 
+tripel für jeden Pixel der linie: (x, y, farbe)
+}
+
+beim laden werden erst die boxen erstellt, dann die startpunkte gesetzt und dann das zeichnen simuliert
+
+
+cursor auf den anderen zeichenflächen anzeigen (cursors)
+
+bind von motion auf der Zeichenfläche und den Boxen
+auf der zeichenfläche: kreuz auf der box mit offset erstellen
+auf einer box: eigen offset von aktueller position abziehen und auf zeichenfläche kreuz erstellen, dann für alle anderen boxen mit methode von zeichenfläche kreuze berechnen
+
+
+zeichnen auf den Boxen (draw_from_box)
+
+rechnet position auf zeichenfläche aus und ruft mit dieser die standart drawfunktion auf
+
+
+zeichendicke und form (choose_shape, control_panel, draw_with, drawing_canvas.width_draw)
+
+für jeden pixel der fläche wird draw aufgerufen
+
+
+
+

@@ -1,0 +1,160 @@
+\documentclass[a4paper,11pt]{scrartcl}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{babelbib}
+
+\usepackage[a4paper]{geometry}
+\usepackage{amsmath}
+
+
+% Ermöglicht Fußnoten in gleitenden Umgebungen
+\usepackage{footnote}
+
+
+\pdfminorversion=6
+
+\usepackage{eurosym}  % € Zeichen
+\usepackage{nicefrac} % Einhalbzeichen
+\usepackage{url}      % URLs
+\usepackage{breakurl} % break urls
+\usepackage[perpage,bottom,marginal]{footmisc} % Footnote configuration
+
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks  = false,     % don't color links
+  pdfborder   = {0 0 0},    % don't put stupid rectangles around links
+  pdftitle    = {Softwareprojektbericht: Common Unfolding},
+  pdfsubject  = {Bericht und Dokumentation zum Softwareprojekt Common Unfolding},
+  pdfauthor   = {Alexa Schlegel, Friedrich Keinhorst, Henry Dettmer},
+  pdfstartview= FitH,
+  pdfkeywords = {Softwareprojekt, Bericht, Dokumentation, 2011, Sommersemester}]
+}
+
+% für die Grafiken
+\usepackage{graphicx}
+
+% mehrer Grafiken nebeneinander
+\usepackage[hang]{subfigure}
+
+% vertikalen Abstand anstelle von horizontalem Abstand bei Absätzen
+\setlength{\parskip}{\smallskipamount}
+\setlength{\parindent}{0pt}
+
+%für Kommentare
+\usepackage{verbatim}
+
+% Rotation der Tabelle
+\usepackage{rotating}
+\usepackage{booktabs} 
+\renewcommand{\arraystretch}{1.2}
+\usepackage{arydshln}
+
+%Captions von Bildern, Tabellen usw.
+\usepackage[labelfont=bf]{caption} 
+\setlength{\belowcaptionskip}{0.3cm}
+
+%Seitenheaders
+\usepackage{fancyhdr}
+
+% Beschriftung in Bildern
+\usepackage[svgnames]{pstricks}
+\usepackage{pst-text}
+\definecolor{bg}{cmyk}{0,0,0.1,0}
+
+\usepackage[page,titletoc]{appendix} % appendix in toc
+
+\newcommand{\goodgap}{%
+\hspace{\subfigtopskip}%
+\hspace{\subfigbottomskip}}
+
+
+\newcommand\parbig{\par\bigskip}
+
+%TYPORGAPHISCHES
+\usepackage{xspace}
+\newcommand{\zB}{\mbox{z.\,B.}\xspace}
+\newcommand{\bzw}{\mbox{bzw\!.}\xspace}
+\newcommand{\usw}{\mbox{usw\!.}\xspace}
+\newcommand{\dH}{\mbox{d.\,h.}\xspace}
+\newcommand{\mailto}[1]{\href{mailto:#1}{#1}}
+
+% Abstract
+\renewcommand{\abstractname}{Zusammenfassung}
+
+%URLPROBLEM
+\urldef{\makro}{\url}{http://javascriptmvc.com/docs.html#!jQuery.fn.selection}
+
+% DECKBLATT
+% Titel and author 
+\title{
+  \includegraphics[width=0.6\textwidth]{03_pics/commonUnfold_beispiel1.pdf}\\[4ex]
+  Projektbericht: Common Unfolding\\[2ex]
+  {
+  \normalsize Softwareprojekt: Anwendung von Algorithmen\\[4ex]
+  }
+  {\normalsize Sommersemester 2011}\\
+  {\normalsize Betreuer: Prof. Dr. Rote}\\[4ex]
+}
+
+\author{Alexa Schlegel\\\mailto{alexa.schlegel@gmail.com} \and Friedrich Keinhorst\\\mailto{fkeinhorst@gmail.com} \and Henry Dettmer\\\mailto{henrydettmer@gmail.com}\\[4ex]
+}
+
+\date{Berlin, \today}
+
+
+\hyphenation{}
+
+\begin{document}
+
+\begin{titlepage}
+
+\pagenumbering{alph}
+\maketitle
+\thispagestyle{empty}
+
+\vfill{}
+\end{titlepage}
+
+\pagestyle{empty}
+\clearpage\pagenumbering{roman}
+
+\tableofcontents
+\clearpage
+
+\pagenumbering{arabic}
+\pagestyle{fancy}
+\setcounter{page}{1}
+
+\begin{abstract}
+Gegenstand des Projektes, Zielstellung, Umsetzung, Ergebnis, Am Ende
+schreiben.
+\end{abstract}
+\clearpage
+
+
+\input{einleitung}
+\clearpage
+
+
+
+
+
+
+
+\nocite{*} 
+\bibliographystyle{alexaAlpha}
+\bibliography{refs}
+\addcontentsline{toc}{section}{Literatur}
+
+\clearpage
+
+
+\listoffigures
+\addcontentsline{toc}{section}{Abbildungsverzeichnis}
+\clearpage
+
+\listoftables
+\addcontentsline{toc}{section}{Tabellenverzeichnis}
+
+\end{document}

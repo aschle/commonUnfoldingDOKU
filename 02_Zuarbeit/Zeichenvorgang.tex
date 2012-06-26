@@ -1,0 +1,94 @@
+%% LyX 2.0.0 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[ngerman]{scrartcl}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{babel}
+\begin{document}
+
+\section*{Zeichenvorgang}
+
+
+\subsection*{Überblick}
+
+Alle Zeichenvorgänge gehen von einer Benutzereingabe auf der Hauptzeichenfläche
+aus, auch beim Zeichnen auf den Schachtel-Zeichenflächen wird ein
+entsprechendes Ereignis auf der Hauptfläche ausgelöst, welches in
+der draw-Methode des DrawingCanvas-Objektes behandelt wird.
+
+Von den x- und y-Koordinaten dieses Ereignisses ausgehend wird von
+jeder Schachtel-Zeichenfläche die Funktion prepare(x, y) aufgerufen.
+
+In den Zeichenflächen werden die Koordinaten berechnet, die, beim
+aktuellen Zeichenvorgang, dem Punkt auf der Hauptfläche entsprechen.
+Zusätzlich wird angegeben ob dieser Punkt auf der Schachtel-Zeichenfläche
+bereits existiert. Falls es auf einer Fläche nicht möglich seien sollte
+entsprechende Koordinaten zu berechnen, wird der Zeichenvorgang abgebrochen.
+
+Falls in den berechneten Schachtel-Koordinaten Konflikte aufgetreten
+sind, also Punkte auf den Schachtelflächen bereits vorhanden sind,
+und das Überschreiben aktiviert ist, werden die bereits vorhandenen
+Punkte und ihre entsprechenden Punkte auf den anderen Zeichenflächen
+gelöscht. Ein auf der Hauptzeichenfläche bereits vorhandener Punkt
+wird ebenso behandelt. Sollte Überschreiben nicht aktiviert sein muss
+der Zeichenvorgang bei vorhandenen Konflikten abgebrochen werden.
+
+Nachdem nun mögliche Konflikte behoben sind können alle berechneten
+Punkte gezeichnet werden.
+
+
+\subsection*{Berechnen der Schachtel-Koordinaten}
+
+In der Funktion prepare(x, y) der BoxCanvas-Objekte wird von den x-,
+y-Koordinaten der Hauptzeichenfläche ausgehend die Koordinaten des
+entsprechenden Punktes der Schachtel-Zeichenfläche berechnet.
+
+Ausgehend vom Startpunkt der Schachtelfläche wird eine Verschiebung
+der Koordinaten addiert. Falls z. B. der Startpunkt der Hauptfläche
+$(100|100)$ ist und der Startpunkt der Schachtelfläche $(200|300)$,
+so ergibt sich $(x+100|y+200)$.
+
+Zu jeder Schachtelfläche gehört eine Liste traversed\_edges, in der
+die im aktuellen Zeichenvorgang überquerten Kanten gespeichert werden.
+Nun wird nacheinander die traverse-Funktion der Kanten für die x-,
+y-Koordinaten aufgerufen. 
+
+Nun muss festgestellt werden, ob der berechnete Punkt wiederum außerhalb
+der Schachtel liegt, ob also eine weitere Kante überquert wurde, oder
+ob der Punkt innerhalb der Schachtel liegt. Dazu werden Orientierungstest
+mit den Eckpunkten der beiden Rechtecke, die die Schachtelfläche bilden
+ausgeführt (Funktion is\_inside(x, y)).
+
+Falls der Punkt außerhalb liegt und im aktuellen Zeichenvorgang bereits
+ein Punkt gezeichnet wurde, also ein gültiger Referenzpunkt vorliegt,
+wird die zwischen den beiden Punkten liegende Kante festgestellt.
+Für diese Kante wird ebenfalls die traverse-Funktion aufgerufen, wodurch
+wir wiederum neue Koordinaten erhalten.
+
+Falls kein Referenzpunkt vorhanden ist, kann kein gültiger Punkt berechnet
+werden.
+
+Nun haben wir also gültige Koordinaten für einen auf der Schachtel
+liegenden Punkt und möglicherweise eine neu überquerte Kante (sollte
+der Punkt schließlich gezeichnet werden, wird diese Kante zur Liste
+der Überquerten hinzugefügt). Jetzt wird noch geprüft ob der berechnete
+Punkt bereits gezeichnet wurde. Diese Information wird zusammen mit
+den berechneten Koordinaten zurückgegeben.
+
+
+\subsection*{Automatisches Auffüllen}
+
+Falls auf einer Schachtelfläche ein Punkt gelöscht wird (z. B. aufgrund
+von Überschreibung), wird dieser Löschvorgang gespeichert. Nachdem
+der aktuelle Punkt gezeichnet wurde, werden die gelöschten Punkt überprüft.
+Falls ein Punkt tatsächlich gelöscht wurde, also kein neuer Punkt
+an der gleichen Stelle gezeichnet wurde, wird in der Funktion get\_autofill
+geprüft, ob auf der entsprechenden Zeichenfläche in der näheren Umgebung
+bereits gezeichnet wurde. Die Anzahl der überprüften Pixel ist abhängig
+von der eingestellten Zeichenbreite.
+
+Falls ein entsprechender Punkt gefunden wird, wird von diesem aus
+{}``aufgefüllt''. Der gelöschte Punkt wird also so gezeichnet, als
+wäre er im gleichen Zeichenvorgang entstanden wie der bereits vorhandene
+Punkt.
+\end{document}
