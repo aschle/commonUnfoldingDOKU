@@ -79,6 +79,9 @@
 \newcommand{\dH}{\mbox{d.\,h.}\xspace}
 \newcommand{\mailto}[1]{\href{mailto:#1}{#1}}
 
+% Keine Ahnung warum, aber "`bla"' funktioniert bei mir nicht.
+\newcommand{\enquote}[1]{\glqq{}#1\grqq{}}
+
 % Abstract
 \renewcommand{\abstractname}{Zusammenfassung}
 
@@ -88,13 +91,18 @@
 % DECKBLATT
 % Titel and author 
 \title{
-  \includegraphics[width=0.6\textwidth]{03_pics/commonUnfold_beispiel1.pdf}\\[4ex]
-  Projektbericht: Common Unfolding\\[2ex]
+  \includegraphics[width=0.6\textwidth]{03_pics/commonUnfold_beispiel1.pdf}\\
+  [4ex]
   {
-  \normalsize Softwareprojekt: Anwendung von Algorithmen\\[4ex]
+  \normalsize Softwareprojekt über Anwendung von Algorithmen\\
+  [2ex]
   }
+  Abschlussbericht zum Softwareprojekt\\
+  \enquote{Common Unfolding}\\
+  [4ex]
   {\normalsize Sommersemester 2011}\\
-  {\normalsize Betreuer: Prof. Dr. Rote}\\[4ex]
+  {\normalsize Betreuer: Prof. Dr. Rote}\\
+  [4ex]
 }
 
 \author{Alexa Schlegel\\\mailto{alexa.schlegel@gmail.com} \and Friedrich Keinhorst\\\mailto{fkeinhorst@gmail.com} \and Henry Dettmer\\\mailto{henrydettmer@gmail.com}\\[4ex]
@@ -134,6 +142,18 @@ schreiben.
 
 
 \input{einleitung}
+\clearpage
+
+\input{projektmanagement}
+\clearpage
+
+\input{handbuch}
+\clearpage
+
+\input{softwarearchitektur}
+\clearpage
+
+\input{zusammenfassung}
 \clearpage
 
 
