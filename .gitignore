@@ -1,5 +1,5 @@
 01_*
 .svn
-.lof
-.out
-.pdf
+*.lof
+*.out
+*.pdf
