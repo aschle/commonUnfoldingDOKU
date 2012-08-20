@@ -21,8 +21,8 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS stat (
 	author TEXT
 	)""")
 
-adress = "https://dev.spline.de/trac/CommonUnfold/timeline?from=2011-04-25&daysback=9&authors="
-# adress = "https://dev.spline.de/trac/CommonUnfold/timeline?from=2011-07-19&daysback=97&authors="
+#adress = "https://dev.spline.de/trac/CommonUnfold/timeline?from=2011-04-25&daysback=9&authors="
+adress = "https://dev.spline.de/trac/CommonUnfold/timeline?from=2011-07-19&daysback=97&authors="
 website = urllib2.urlopen(adress)
 website_html = website.read()
 website.close()
