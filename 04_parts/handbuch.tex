@@ -49,15 +49,15 @@ Alle Schachteln werden in einer \emph{Preview} angezeigt und stehen zur Auswahl 
 \subsection{Zeichenoberfläche und Startpunkte}
 \label{subsec:zeichenoberflaeche}
 
-Wählt man mehr als eine Schachteln aus und bestätigt die Auswahl mit \texttt{OK}, so gelangt man zur \emph{Zeichenoberfläche} (siehe~Abb.~\ref{fig:zeichenoberflaeche}). 
+Wählt man mehr als eine Schachtel aus und bestätigt die Auswahl mit \texttt{OK}, so gelangt man zur \emph{Zeichenoberfläche} (siehe~Abb.~\ref{fig:zeichenoberflaeche}).\\
 
 Die Zeichenoberfläche besteht aus den folgenden vier Bereichen:
 
   \begin{description}
     \item [{(1)~Zeichenbereich:}] In diesem Bereich wird gezeichnet, hier     entsteht die neue Grundfläche aus der die links angezeigten Schachteln   gefaltet werden können.
-    \item [(2)~Netze~der~Schachteln:] Im linken Bereich der Oberfläche werden alle ausgewählten Gitternetze untereinander angezeigt.
-    \item [(3)~Startpunkte-Dialog] Bevor man zeichnen kann, können Startpunkte auf den einzelnen Schachteln gesetzt werden, dies kann in einem extra Fenster passieren (es wird beim Erstellen der Schacchteln automatisch geöffnet), indem die genauen $(x,y)$-Werte für alle Schachteln eingegeben werden oder auch durch Klicken auf die Schachteln direkt im Bereich~(3). Das Setzen der Startpunkte auch über die Menüleiste \texttt{Edit $\rightarrow$ Set Start Points} erfolgen.
-    \item [(4)~Werkzeugleiste] Hier können verschiedene Optionen bezüglich des Zeichenvorgangs eingestellt werden. Dazu gehören das Einstellen der Pinselgröße, Zeichenfarbe und Pinselform. Außerdem müssen \texttt{Overwrite}, \texttt{Autofill} und \texttt{Continue} noch erklärt werden. [TODO:XXX]
+    \item [(2)~Netze~der~Schachteln:] Im linken Bereich der Oberfläche werden alle ausgewählten Gitternetze untereinander angezeigt. Wir auf der Zeichenfläche gemalt so wird auf den Schachteln die ausgemalte Fläche angezeigt.
+    \item [(3)~Startpunkte-Dialog:] Bevor man mit dem Zeichnen beginnt, können Startpunkte auf den einzelnen Schachteln gesetzt werden, dies kann in einem extra Fenster passieren (es wird beim Erstellen der Schachteln automatisch geöffnet), indem die genauen $(x,y)$-Werte für alle Schachteln eingegeben werden oder auch durch Klicken auf die Schachteln direkt im Bereich~(3). Das Setzen der Startpunkte kann auch über die Menüleiste \texttt{Edit $\rightarrow$ Set Start Points} erfolgen.
+    \item [(4)~Werkzeugleiste] Hier können verschiedene Optionen bezüglich des Zeichenvorgangs eingestellt werden. Dazu gehören das Einstellen der Pinselgröße, Zeichenfarbe und Pinselform. Außerdem können die Optionen \texttt{Overwrite}, \texttt{Autofill} und \texttt{Continue} aktiviert werden. Diese Optionen werden im folgenden Abschnitt~\ref{subsec:zeichnen} erläutert.
   \end{description}
 
 \begin{figure}[htbp]
@@ -76,7 +76,14 @@ Die Zeichenoberfläche besteht aus den folgenden vier Bereichen:
 % DAS ZEICHNEN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Das Zeichnen}
-[TODO:XXX]
+\label{subsec:zeichnen}
+Nachdem die Startpunkte gesetzt wurden, \bzw die Default-Werte übernommen wurden, kann im Zeichenbereich gezeichnet werden. Dabei können verschieden Optionen über die Werkzeugleiste eingestellt werden.
+
+\begin{description}
+  \item [Overwrite] Aktiviert man \texttt{Overwrite} so werden breits ausgemalte Fkächenstücke überschrieben.
+  \item [Autofill] In Kombinationen mit dem aktivierten \texttt{Overwrite} bewirkt \texttt{Autofill}, dass durch \texttt{Overrite} entstandene unausgemalte Flächenstücke automatisch aufgefüllt werden.
+  \item [Continue] [TODO:XXX:Was macht das denn?]
+\end{description}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -84,8 +91,16 @@ Die Zeichenoberfläche besteht aus den folgenden vier Bereichen:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % LADEN, SPEICHERN, EXPORTIEREN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Datei lade, speichern, exportieren}
+\subsection{Menüleiste und Shortcuts}
 \label{subsec:dateioperationen}
 
-Beschreibung wie werden Dateien geladen, gespeichert und exportiert.
-[TODO:XXX]
+Über die Menüleiste können Dateien gespeichert, geladen und exportiert werden. Außerdem können Aktionen rückgängig gemacht und wiederholt werden, zudem kann die Option \texttt{Save Before Closing} aktiviert werden.
+
+\begin{description}
+  \item [Open File]
+  \item [Save File] 
+  \item [Export As PostScript]
+  \item [Save Before Closing]
+  \item [Undo]
+  \item [Redo]
+\end{description}
