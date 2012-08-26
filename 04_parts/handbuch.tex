@@ -67,9 +67,6 @@ Die Zeichenoberfläche besteht aus den folgenden vier Bereichen:
   \label{fig:zeichenoberflaeche}
 \end{figure}
 
-[TODO:XXX:Bild an die anderen Bilder anpassen]
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -77,13 +74,24 @@ Die Zeichenoberfläche besteht aus den folgenden vier Bereichen:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Das Zeichnen}
 \label{subsec:zeichnen}
-Nachdem die Startpunkte gesetzt wurden, \bzw die Default-Werte übernommen wurden, kann im Zeichenbereich gezeichnet werden. Dabei können verschieden Optionen über die Werkzeugleiste eingestellt werden.
+Nachdem die Startpunkte gesetzt wurden, \bzw die Default-Werte übernommen wurden, kann im Zeichenbereich gezeichnet werden. Der erste Klick in den Zeichenbereich setzt den Ursprung des Tasters $(0,0)$. Zum Zeichnen klickt man einfach in den Zeichenbreich und hält die Maustaste gedrückt, der Curser wird zu einem Stift mit dem man malen kann. Gleichzeitig wird auf allen Oberflächen syncron gemalt, dies wird mit einem kleinen Kreuz auf den anderen Flächen angezeigt, wo sich der Curser gerade befindet (siehe Abb.~\ref{fig:zeichnen}). Es kann auch auf den Schachtelflächen gemalt werden. Die Fläche die im Zeichenbereich entsteht sollte zusammenhängend sein.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[scale=0.5]{03_pics/zeichnen.png}
+  \caption{Zeichnen}
+  \label{fig:zeichnen}
+\end{figure}
+
+Es können verschieden Optionen über die Werkzeugleiste eingestellt werden, diese werde im Folgenden näher erläutert.
 
 \begin{description}
-  \item [Overwrite] Aktiviert man \texttt{Overwrite} so werden breits ausgemalte Fkächenstücke überschrieben.
+  \item [Overwrite] Aktiviert man \texttt{Overwrite} so werden breits ausgemalte Flächenstücke überschrieben.
   \item [Autofill] In Kombinationen mit dem aktivierten \texttt{Overwrite} bewirkt \texttt{Autofill}, dass durch \texttt{Overrite} entstandene unausgemalte Flächenstücke automatisch aufgefüllt werden.
   \item [Continue] [TODO:XXX:Was macht das denn?]
 \end{description}
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -97,10 +105,10 @@ Nachdem die Startpunkte gesetzt wurden, \bzw die Default-Werte übernommen wurde
 Über die Menüleiste können Dateien gespeichert, geladen und exportiert werden. Außerdem können Aktionen rückgängig gemacht und wiederholt werden, zudem kann die Option \texttt{Save Before Closing} aktiviert werden.
 
 \begin{description}
-  \item [Open File]
-  \item [Save File] 
-  \item [Export As PostScript]
-  \item [Save Before Closing]
-  \item [Undo]
-  \item [Redo]
+  \item [Open File] Es können zuvor gespeicherte Dateien mit \texttt{Ctrl+O} geöffnet werden. Gespeicherte Dateien sind \texttt{CommonUnfoldFiles} mit einer Dateiendung \texttt{*.cuf}.
+  \item [Save File] Dateien können als \texttt{*.cuf} gespeichert werden.
+  \item [Export As PostScript] Dateien können ausschließlich als PostScript (\texttt{*.ps}) gespeichert werden. Gespeichert wird dann der Zeichenbereich (der Bereich auf der rechten Seite).
+  \item [Save Before Closing] Diese Option kann aktiviert werden, so werden Dateien automatisch beim Schließen des Programms abgespeichert.
+  \item [Undo] Mit \texttt{Ctrl+Z} können Schritte rückgängig gemacht werden.
+  \item [Redo] Mit \texttt{Ctrl+Y} können Schritte wiederholt werden. 
 \end{description}
