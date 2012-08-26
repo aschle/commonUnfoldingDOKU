@@ -1,6 +1,10 @@
 \section{Backend und Softwarearchitektur}
 \label{sec:backend}
 
+In diesem Teil der Arbeit wird die technische Umsetzung des Projekts erläutert. Dazu gehören die funktionalen Anforderungen, welche zum größten Teil durch unsere Aufgabenstellung gegeben waren, sowie die Beschreibung der Funktioneweise des Programmes, wobei Schwierigkeiten und Herausforderungen bezüglich der technischen Umsetzung und Algorithmen näher beschreiben werden.\\
+
+Grundsätzlich haben wir eine Trennung nach dem MVC-Prinzip angestrebt.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -9,33 +13,15 @@
 \subsection{Funktionale Anforderungen}
 \label{subsec:anforderungen}
 
-Im Fogenden werden wir die Funktionalen Anforderung an unser Programm erläutern. Diese waren zum Teil durch die Aufgabenstellung gegeben, ergaben sich aber auch während der Programmierarbeit.
+Im Fogenden werden wir die funktionalen Anforderung an unser Programm erläutern. Diese waren zum Teil durch die Aufgabenstellung gegeben, ergaben sich aber auch während der Programmierarbeit.
 
-  \begin{description}
-    \item [{Optionale~Verknüpfung~von~Randstücken:}] Wird ein Gitternetz     eines Quaders gezeichnet, so entstehen doppelte Linien, obwohl es dies Kanten nur einmal gibt. Hier galt es eine Regel zu finden um Ungenauigkeiten zu vermeiden.
-    \item [{Unterstützung~der~Anfangszuordnung:}] Bevor mit dem Zeichnen begonnen wird, sollen die Startpunkte auf den einzelnen Schachteln ausgewählt werden können.
-    \item [{Automatisierung~der~Verarbeitung~verschiedener~Schachteln:}] Es soll durch den Benutzer ausgewählt werden, welche Schachteln er bearbeten
-    möchte.
-    \item [{Automatisches~Auffüllen:}] Das ist ein wenig komplizierter, wird an einer Stelle etwas weggenommen, weil es zum Beispiel durch eine ander Fläche übermalt wurde, so sollen automatisch die Zwischenräume aufgefüllt werden.
-  \end{description}
-
-Wir haben eine Trennung von MVC-Pattern angestrebt. Trennun gvon GUI
-und Logik.\\
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% TECHNOLOGIEN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Verwendete Technologien und Systemvoraussetzungen}
-\label{subsec:technologien}
-
-
-SystemvoraussetzungenCommon unfolding\\
-Welches Betreibssystem wird benötigt?\\
-Welche Abhängigkeiten sind zu beachten?\\
-Wie führe ich das Programm aus?\\
+\begin{description}
+  \item [{Optionale~Verknüpfung~von~Randstücken:}] Wird ein Gitternetz     eines Quaders gezeichnet, so entstehen doppelte Linien, obwohl es dies Kanten nur einmal gibt. Hier galt es eine Regel zu finden um Ungenauigkeiten zu vermeiden.
+  \item [{Unterstützung~der~Anfangszuordnung:}] Bevor mit dem Zeichnen begonnen wird, sollen die Startpunkte auf den einzelnen Schachteln ausgewählt werden können.
+  \item [{Automatisierung~der~Verarbeitung~verschiedener~Schachteln:}] Es soll durch den Benutzer ausgewählt werden, welche Schachteln er bearbeiten
+  möchte.
+  \item [{Automatisches~Auffüllen:}] Das ist ein wenig komplizierter, wird an einer Stelle etwas weggenommen, weil es zum Beispiel durch eine ander Fläche übermalt wurde, so sollen automatisch die Zwischenräume aufgefüllt werden.
+\end{description}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
