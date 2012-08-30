@@ -1,9 +1,8 @@
 \section{Backend und Softwarearchitektur}
 \label{sec:backend}
 
-In diesem Teil der Arbeit wird die technische Umsetzung des Projekts erläutert. Dazu gehören die funktionalen Anforderungen, welche zum größten Teil durch unsere Aufgabenstellung gegeben waren, sowie die Beschreibung der Funktioneweise des Programmes, wobei Schwierigkeiten und Herausforderungen bezüglich der technischen Umsetzung und Algorithmen näher beschreiben werden.\\
+In diesem Teil der Arbeit wird die technische Umsetzung des Projekts erläutert. Dazu gehören die funktionalen Anforderungen, welche zum größten Teil durch unsere Aufgabenstellung gegeben waren, sowie die Beschreibung der Funktioneweise des Programmes. Auf Schwierigkeiten und Herausforderungen bezüglich der technischen Umsetzung und Algorithmen wird näher eingegangen.\\
 
-Grundsätzlich haben wir eine Trennung nach dem MVC-Prinzip angestrebt.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -13,16 +12,19 @@ Grundsätzlich haben wir eine Trennung nach dem MVC-Prinzip angestrebt.
 \subsection{Funktionale Anforderungen}
 \label{subsec:anforderungen}
 
-Im Fogenden werden wir die funktionalen Anforderung an unser Programm erläutern. Diese waren zum Teil durch die Aufgabenstellung gegeben, ergaben sich aber auch während der Programmierarbeit.
+Im Fogenden werden wir die funktionalen Anforderung an unser Programm erläutern. Diese waren zum vor allem durch die Aufgabenstellung gegeben. Ziel war es eine grafische Oberfläche zu entwickeln mit der es möglich ist das Konzept des simultanen Zeichnens zu verwenden.
 
-\begin{description}
-  \item [{Optionale~Verknüpfung~von~Randstücken:}] Wird ein Gitternetz     eines Quaders gezeichnet, so entstehen doppelte Linien, obwohl es dies Kanten nur einmal gibt. Hier galt es eine Regel zu finden um Ungenauigkeiten zu vermeiden.
-  \item [{Unterstützung~der~Anfangszuordnung:}] Bevor mit dem Zeichnen begonnen wird, sollen die Startpunkte auf den einzelnen Schachteln ausgewählt werden können.
-  \item [{Automatisierung~der~Verarbeitung~verschiedener~Schachteln:}] Es soll durch den Benutzer ausgewählt werden, welche Schachteln er bearbeiten
-  möchte.
-  \item [{Automatisches~Auffüllen:}] Das ist ein wenig komplizierter, wird an einer Stelle etwas weggenommen, weil es zum Beispiel durch eine ander Fläche übermalt wurde, so sollen automatisch die Zwischenräume aufgefüllt werden.
-\end{description}
+\paragraph{Optionale Verknüpfung von Randstücken}
+Wird ein Gitternetz eines Quaders gezeichnet, so entstehen doppelte Kanten, obwohl es diese Kanten nur einmal gibt. Hier galt es eine Regel zu finden um Ungenauigkeiten zu vermeiden.
 
+\paragraph{Unterstützung der Anfangszuordnung}
+Bevor mit dem Zeichnen begonnen wird, sollen die Startpunkte auf den einzelnen Schachteln ausgewählt werden können.
+
+\paragraph{Automatisierung der Verarbeitung verschiedener Schachteln}
+Es soll durch den Benutzer ausgewählt werden, welche Schachteln er bearbeiten möchte.
+
+\paragraph{Automatisches Auffüllen}
+Wird an einer Stelle etwas weggenommen, weil es zum Beispiel durch eine andere Fläche übermalt wurde, so sollen automatisch die Zwischenräume mitFarbe aufgefüllt werden.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -34,7 +36,7 @@ Im Fogenden werden wir die funktionalen Anforderung an unser Programm erläutern
 
 Alle Zeichenvorgänge gehen von einer Benutzereingabe auf der Hauptzeichenfläche aus, auch beim Zeichnen auf den Schachtel-Zeichenflächen wird ein entsprechendes Ereignis auf der Hauptfläche ausgelöst, welches in der draw-Methode des DrawingCanvas-Objektes behandelt wird.\\
 
-Von den x- und y-Koordinaten dieses Ereignisses ausgehend wird von jeder Schachtel-Zeichenfläche die Funktion prepare(x, y) aufgerufen.\\
+Von den $x - $ und $y - $Koordinaten dieses Ereignisses ausgehend wird von jeder Schachtel-Zeichenfläche die Funktion \texttt{prepare(x, y)} aufgerufen.\\
 
 In den Zeichenflächen werden die Koordinaten berechnet, die, beim aktuellen Zeichenvorgang, dem Punkt auf der Hauptfläche entsprechen. Zusätzlich wird angegeben ob dieser Punkt auf der Schachtel-Zeichenfläche bereits existiert. Falls es auf einer Fläche nicht möglich seien sollte entsprechende Koordinaten zu berechnen, wird der Zeichenvorgang abgebrochen.\\
 
@@ -49,13 +51,13 @@ Nachdem nun mögliche Konflikte behoben sind können alle berechneten Punkte gez
 \subsubsection{Berechnen der Schachtel-Koordinaten}
 \label{subsubsec:schachtelkoordinaten}
 
-In der Funktion prepare(x, y) der BoxCanvas-Objekte wird von den x-, y-Koordinaten der Hauptzeichenfläche ausgehend die Koordinaten des entsprechenden Punktes der Schachtel-Zeichenfläche berechnet.\\
+In der Funktion \texttt{prepare(x, y)} der BoxCanvas-Objekte wird von den $x$-, $y$-Koordinaten der Hauptzeichenfläche ausgehend die Koordinaten des entsprechenden Punktes der Schachtel-Zeichenfläche berechnet.\\
 
 Ausgehend vom Startpunkt der Schachtelfläche wird eine Verschiebung der Koordinaten addiert. Falls z. B. der Startpunkt der Hauptfläche $(100|100)$ ist und der Startpunkt der Schachtelfläche $(200|300)$, so ergibt sich $(x+100|y+200)$.\\
 
-Zu jeder Schachtelfläche gehört eine Liste traversed\_edges, in der die im aktuellen Zeichenvorgang überquerten Kanten gespeichert werden. Nun wird nacheinander die traverse-Funktion der Kanten für die x-, y-Koordinaten aufgerufen.\\
+Zu jeder Schachtelfläche gehört eine Liste \texttt{traversed\_edges}, in der die im aktuellen Zeichenvorgang überquerten Kanten gespeichert werden. Nun wird nacheinander die traverse-Funktion der Kanten für die $x$-, $y$-Koordinaten aufgerufen.\\
 
-Nun muss festgestellt werden, ob der berechnete Punkt wiederum außerhalb der Schachtel liegt, ob also eine weitere Kante überquert wurde, oder ob der Punkt innerhalb der Schachtel liegt. Dazu werden Orientierungstest mit den Eckpunkten der beiden Rechtecke, die die Schachtelfläche bilden ausgeführt (Funktion is\_inside(x, y)).\\
+Nun muss festgestellt werden, ob der berechnete Punkt wiederum außerhalb der Schachtel liegt, ob also eine weitere Kante überquert wurde, oder ob der Punkt innerhalb der Schachtel liegt. Dazu werden Orientierungstest mit den Eckpunkten der beiden Rechtecke, die die Schachtelfläche bilden ausgeführt (Funktion \texttt{is\_inside(x, y)}).\\
 
 Falls der Punkt außerhalb liegt und im aktuellen Zeichenvorgang bereits ein Punkt gezeichnet wurde, also ein gültiger Referenzpunkt vorliegt, wird die zwischen den beiden Punkten liegende Kante festgestellt. Für diese Kante wird ebenfalls die traverse-Funktion aufgerufen, wodurch wir wiederum neue Koordinaten erhalten.\\
 
@@ -70,65 +72,60 @@ Nun haben wir also gültige Koordinaten für einen auf der Schachtel liegenden P
 \subsubsection{Automatisches Auffüllen}
 \label{subsubsec:auffuellen}
 
-Falls auf einer Schachtelfläche ein Punkt gelöscht wird (z. B. aufgrund von Überschreibung), wird dieser Löschvorgang gespeichert. Nachdem der aktuelle Punkt gezeichnet wurde, werden die gelöschten Punkt überprüft. Falls ein Punkt tatsächlich gelöscht wurde, also kein neuer Punkt an der gleichen Stelle gezeichnet wurde, wird in der Funktion get\_autofill geprüft, ob auf der entsprechenden Zeichenfläche in der näheren Umgebung bereits gezeichnet wurde. Die Anzahl der überprüften Pixel ist abhängig von der eingestellten Zeichenbreite.\\
+Falls auf einer Schachtelfläche ein Punkt gelöscht wird (z. B. aufgrund von Überschreibung), wird dieser Löschvorgang gespeichert. Nachdem der aktuelle Punkt gezeichnet wurde, werden die gelöschten Punkt überprüft. Falls ein Punkt tatsächlich gelöscht wurde, also kein neuer Punkt an der gleichen Stelle gezeichnet wurde, wird in der Funktion \texttt{get\_autofill} geprüft, ob auf der entsprechenden Zeichenfläche in der näheren Umgebung bereits gezeichnet wurde. Die Anzahl der überprüften Pixel ist abhängig von der eingestellten Zeichenbreite.\\
 
-Falls ein entsprechender Punkt gefunden wird, wird von diesem aus ``aufgefüllt''. Der gelöschte Punkt wird also so gezeichnet, als wäre er im gleichen Zeichenvorgang entstanden wie der bereits vorhandene Punkt.\\ 
+Falls ein entsprechender Punkt gefunden wird, wird von diesem aus "`aufgefüllt"'. Der gelöschte Punkt wird also so gezeichnet, als wäre er im gleichen Zeichenvorgang entstanden wie der bereits vorhandene Punkt.\\ 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % STARTPUNKTE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{startpunkte (startpoint\_dialog, startpoint\_main)}
+\subsubsection{Setzen von Startpunkten}
 \label{subsubsec:startpunkte}
-
-Startpunkte auf Boxen im startpoint\_dialog mit Mausklick oder in
-Spinnbox, box\_canvas.offset wird angepasst Startpunkte auf drawing\_canvas
-mit mausklick auf Zeichenfläche in startpoint\_main. startpunkt wird
-von allen box\_canvas.offset's subtrahiert
+Startpunkte werden für jede Schachtelflächen gesetzt. Diese Werte werden als Offset in \texttt{box\_canvas.offset} gespeichert. Wird der Startpunkt auf der Zeichenfläche gesetzt, so wird dieser von allen \texttt{box\_canvas.offset}`s subtrahiert.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % UNDO/REDO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{undo/redo (undoable)}
+\subsubsection{Undo und Redo}
 \label{subsubsec:undoRedo}
 
-bei draw werden sich alle punkte x,y gespeichrt, wenn vorher gezeichneter punkt gelöscht wird, werden alle dazugehörigen pixel auf den Boxen und der Zeichenfläche gespeichert. zusätzlich wird der anfangsstatus gespeichet. mit overide, autofill, countinue\_draw und anfangs überquerten kanten auf den Boxen bei undo werden alle diese punkte mit drawing\_canvas.erase
-gelöscht und in der redoliste gespeichert. anschließend werden die
-durch diese gelöschten pixel vorher überschriebenen pixel wiederhergestellt\\
+Beim Zeichenvoragng werde alle Punkte in der Form $(x,y)$ gespeichert. Wenn ein vorher gezeichneter Punkt gelöscht wird, so werden alle dazugehörigen Punkte auf den einzelnen Boxen und der Zeichenfläche gespeichert. Zusätzlich wird der Anfangsstatus gespeichet. Dazu gehören die Status: \texttt{overwrite}, \texttt{autofill}, \texttt{continue} und die anfangs überquerten Kanten auf den Schachtelflächen.\\
 
-bei redo wird ein erneutes zeichnen auf der zeichenfläche mit hilfe
-von my\_event simuliert\\
+Bei \texttt{Undo} werden alle diese Punkte mit \texttt{drawing\_canvas.erase} gelöscht und in der Redo-Liste gespeichert. Anschließend werden die durch diese gelöschten Punkt vorher überschriebenen Punkte wiederhergestellt\\
+
+Bei \texttt{Redo} wird ein erneutes Zeichnen auf der Zeichenfläche mit Hilfe
+von \texttt{my\_event} simuliert.\\
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SPEICHERN/LADEN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Speichern/Laden (save\_load)}
+\subsubsection{Speichern und Laden}
 \label{subsubsec:speichernLaden}
+Wird der Status eine Zeichenfläche abgespeichert, so wird eine modifzierte Undo-Liste als CommonUnfoldFile (\texttt{*.cuf}) abgespeichert.\\
 
-eine modifzierte Undo-Liste wird abgespeichert als CommonUnfoldFile
-{[}{*}.cuf{]}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% COMMONUNFOLDFILE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{CommonUnfoldFile}
-\label{subsubsec:commonunfoldfile}
+Struktur des CommonUnfoldFiles:
 
 \begin{itemize}
-\item int: Anzahl der Boxen Quadtrupel für jede box: (höhe,breite,tiefe,rotation)
-tupel für jede box: boxstartpunkt(x,y) tupel: Zeichenflächenstartpunkt
-(x,y) int: Anzahl der gezeichneten Linien (Linie endet nach Mausrelease)
-für jede linie:\{ int: anzahl der Pixel Boolean: war overwrite aktiv
-Boolean: war autofill aktiv Boolean: war continu line aktiv Liste
-von Kanten für jede Box als Start boxes.traversed tripel für jeden
-Pixel der linie: (x, y, farbe) \}
-\item beim laden werden erst die boxen erstellt, dann die startpunkte gesetzt
-und dann das zeichnen simuliert
+\item Integer: Anzahl der Schachteln
+\item Quadtrupel für jede Schachtel: (Höhe, Breite, Tiefe, Rotation)
+\item Tupel für jede Schachtel: Startpunkt der Schachtel $(x,y)$
+\item Tupel: Startpunkt der Zeichenfläche $(x,y)$
+\item Integer: Anzahl der gezeichneten Linien (Linie endet nach dem Loslassen der Maus)
+\item Für jede Linie:
+  \begin{itemize}
+    \item Integer: Anzahl der Pixel
+    \item Boolean: war der Status \texttt{overwrite} aktiv
+    \item Boolean: war der Status \texttt{autofill} aktiv
+    \item Boolean: war der Status \texttt{continue} aktiv
+    \item Liste von Kanten für jede Schachtel (als Start \texttt{boxes.traversed}
+    \item Tripel für jeden Pixel der Linie: $(x, y, Farbe)$
+  \end{itemize}
 \end{itemize}
 
+Beim Laden einer \texttt{*.cuf} Datei, werden erst die Schachteln erstellt, dann die Startpunkte gesetzt und im Anschluss das Zeichnen simuliert.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CURSOR %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
