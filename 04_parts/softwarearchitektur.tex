@@ -1,7 +1,7 @@
 \section{Backend und Softwarearchitektur}
 \label{sec:backend}
 
-In diesem Teil der Arbeit wird die technische Umsetzung des Projekts erläutert. Dazu gehören die funktionalen Anforderungen, welche zum größten Teil durch unsere Aufgabenstellung gegeben waren, sowie die Beschreibung der Funktioneweise des Programmes. Auf Schwierigkeiten und Herausforderungen bezüglich der technischen Umsetzung und Algorithmen wird näher eingegangen.\\
+In diesem Teil der Arbeit wird die technische Umsetzung des Projekts erläutert. Dazu gehören die funktionalen Anforderungen, welche zum größten Teil durch unsere Aufgabenstellung gegeben waren, sowie die Beschreibung der Funktionsweise des Programms. Auf Schwierigkeiten und Herausforderungen bezüglich der technischen Umsetzung und Algorithmen wird näher eingegangen.\\
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -12,7 +12,7 @@ In diesem Teil der Arbeit wird die technische Umsetzung des Projekts erläutert.
 \subsection{Funktionale Anforderungen}
 \label{subsec:anforderungen}
 
-Im Fogenden werden wir die funktionalen Anforderung an unser Programm erläutern. Diese waren zum vor allem durch die Aufgabenstellung gegeben. Ziel war es eine grafische Oberfläche zu entwickeln mit der es möglich ist das Konzept des simultanen Zeichnens zu verwenden.
+Im Fogenden werden wir die funktionalen Anforderungen an unser Programm erläutern. Diese waren vor allem durch die Aufgabenstellung gegeben. Ziel war es eine grafische Oberfläche zu entwickeln mit der es möglich ist das Konzept des simultanen Zeichnens zu verwenden.
 
 \paragraph{Optionale Verknüpfung von Randstücken}
 Wird ein Gitternetz eines Quaders gezeichnet, so entstehen doppelte Kanten, obwohl es diese Kanten nur einmal gibt. Hier galt es eine Regel zu finden um Ungenauigkeiten zu vermeiden.
@@ -24,7 +24,7 @@ Bevor mit dem Zeichnen begonnen wird, sollen die Startpunkte auf den einzelnen S
 Es soll durch den Benutzer ausgewählt werden, welche Schachteln er bearbeiten möchte.
 
 \paragraph{Automatisches Auffüllen}
-Wird an einer Stelle etwas weggenommen, weil es zum Beispiel durch eine andere Fläche übermalt wurde, so sollen automatisch die Zwischenräume mitFarbe aufgefüllt werden.
+Wird an einer Stelle etwas weggenommen, weil es zum Beispiel durch eine andere Fläche übermalt wurde, so sollen automatisch die Zwischenräume mit Farbe aufgefüllt werden.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -38,11 +38,11 @@ Alle Zeichenvorgänge gehen von einer Benutzereingabe auf der Hauptzeichenfläch
 
 Von den $x - $ und $y - $Koordinaten dieses Ereignisses ausgehend wird von jeder Schachtel-Zeichenfläche die Funktion \texttt{prepare(x, y)} aufgerufen.\\
 
-In den Zeichenflächen werden die Koordinaten berechnet, die, beim aktuellen Zeichenvorgang, dem Punkt auf der Hauptfläche entsprechen. Zusätzlich wird angegeben ob dieser Punkt auf der Schachtel-Zeichenfläche bereits existiert. Falls es auf einer Fläche nicht möglich seien sollte entsprechende Koordinaten zu berechnen, wird der Zeichenvorgang abgebrochen.\\
+In den Zeichenflächen werden die Koordinaten berechnet, die beim aktuellen Zeichenvorgang dem Punkt auf der Hauptfläche entsprechen. Zusätzlich wird angegeben, ob dieser Punkt auf der Schachtel-Zeichenfläche bereits existiert. Falls es auf einer Fläche nicht möglich sein sollte, entsprechende Koordinaten zu berechnen, wird der Zeichenvorgang abgebrochen.\\
 
-Falls in den berechneten Schachtel-Koordinaten Konflikte aufgetreten sind, also Punkte auf den Schachtelflächen bereits vorhanden sind, und das Überschreiben aktiviert ist, werden die bereits vorhandenen Punkte und ihre entsprechenden Punkte auf den anderen Zeichenflächen gelöscht. Ein auf der Hauptzeichenfläche bereits vorhandener Punkt wird ebenso behandelt. Sollte Überschreiben nicht aktiviert sein muss der Zeichenvorgang bei vorhandenen Konflikten abgebrochen werden.\\
+Falls in den berechneten Schachtel-Koordinaten Konflikte aufgetreten sind, also Punkte auf den Schachtelflächen bereits vorhanden sind, und das Überschreiben aktiviert ist, werden die bereits vorhandenen Punkte und ihre entsprechenden Punkte auf den anderen Zeichenflächen gelöscht. Ein auf der Hauptzeichenfläche bereits vorhandener Punkt wird ebenso behandelt. Sollte \emph{Überschreiben} nicht aktiviert sein, muss der Zeichenvorgang bei vorhandenen Konflikten abgebrochen werden.\\
 
-Nachdem nun mögliche Konflikte behoben sind können alle berechneten Punkte gezeichnet werden.\\
+Nachdem nun mögliche Konflikte behoben sind,, können alle berechneten Punkte gezeichnet werden.\\
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -91,7 +91,7 @@ Startpunkte werden für jede Schachtelflächen gesetzt. Diese Werte werden als O
 \subsubsection{Undo und Redo}
 \label{subsubsec:undoRedo}
 
-Beim Zeichenvoragng werde alle Punkte in der Form $(x,y)$ gespeichert. Wenn ein vorher gezeichneter Punkt gelöscht wird, so werden alle dazugehörigen Punkte auf den einzelnen Boxen und der Zeichenfläche gespeichert. Zusätzlich wird der Anfangsstatus gespeichet. Dazu gehören die Status: \texttt{overwrite}, \texttt{autofill}, \texttt{continue} und die anfangs überquerten Kanten auf den Schachtelflächen.\\
+Beim Zeichenvorgang werdne alle Punkte in der Form $(x,y)$ gespeichert. Wenn ein vorher gezeichneter Punkt gelöscht wird, so werden alle dazugehörigen Punkte auf den einzelnen Boxen und der Zeichenfläche gespeichert. Zusätzlich wird der Anfangsstatus gespeichert. Dazu gehören die Zustände: \texttt{overwrite}, \texttt{autofill}, \texttt{continue} und die anfangs überquerten Kanten auf den Schachtelflächen.\\
 
 Bei \texttt{Undo} werden alle diese Punkte mit \texttt{drawing\_canvas.erase} gelöscht und in der Redo-Liste gespeichert. Anschließend werden die durch diese gelöschten Punkt vorher überschriebenen Punkte wiederhergestellt\\
 
@@ -104,7 +104,7 @@ von \texttt{my\_event} simuliert.\\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Speichern und Laden}
 \label{subsubsec:speichernLaden}
-Wird der Status eine Zeichenfläche abgespeichert, so wird eine modifzierte Undo-Liste als CommonUnfoldFile (\texttt{*.cuf}) abgespeichert.\\
+Wird der Status einer Zeichenfläche abgespeichert, so wird eine modifzierte Undo-Liste als CommonUnfoldFile (\texttt{*.cuf}) abgespeichert.\\
 
 Struktur des CommonUnfoldFiles:
 
@@ -130,9 +130,10 @@ Beim Laden einer \texttt{*.cuf} Datei, werden erst die Schachteln erstellt, dann
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CURSOR %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{cursor auf den anderen zeichenflächen anzeigen (cursors)}
+\subsubsection{Cursor auf den anderen Zeichenflächen anzeigen (cursors)}
 \label{subsubsec:cursor}
 
+% TODO
 \begin{itemize}
 \item bind von motion auf der Zeichenfläche und den Boxen auf der zeichenfläche:
 kreuz auf der box mit offset erstellen auf einer box: eigen offset
