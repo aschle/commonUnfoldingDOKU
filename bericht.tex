@@ -80,6 +80,43 @@
 \newcommand{\dH}{\mbox{d.\,h.}\xspace}
 \newcommand{\mailto}[1]{\href{mailto:#1}{#1}}
 
+\usepackage{listings}
+% Pimp my listings environment.
+% Credits go to stackoverflow:
+% http://stackoverflow.com/questions/741985/latex-source-code-listing-like-in-professional-books
+\lstset{
+         basicstyle=\footnotesize\ttfamily, % Standardschrift
+         numberstyle=\tiny,          % Stil der Zeilennummern
+         numbers=left,
+         stepnumber=1,
+         numbersep=7pt,              % Abstand der Nummern zum Text
+         keywordstyle=\bfseries\ttfamily,
+         tabsize=2,                  % Groesse von Tabs
+         extendedchars=true,         %
+         breaklines=true,            % Zeilen werden Umgebrochen       
+         showspaces=false,           % Leerzeichen anzeigen ?
+         showtabs=false,             % Tabs anzeigen ?
+         %frame=b,                   % Linie unten
+         breakatwhitespace=true,
+         xleftmargin=17pt,
+         framexleftmargin=17pt,
+         framexrightmargin=5pt,
+         framexbottommargin=4pt,
+         showstringspaces=false      % Leerzeichen in Strings anzeigen ?      
+ }
+
+% Pimp my captions.
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{\hspace{15pt}#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={bf}}
+
+\lstset{language=Python} % this sets the syntax highlighting
+
+% enables UTF-8 in source code:
+\lstset{literate={ä}{{\"a}}1 {ö}{{\"o}}1 {ü}{{\"u}}1 {Ä}{{\"A}}1
+{Ö}{{\"O}}1 {Ü}{{\"U}}1 {ß}{\ss}1}
+%%% end listings
+
 % Keine Ahnung warum, aber "`bla"' funktioniert bei mir nicht.
 \newcommand{\enquote}[1]{\glqq{}#1\grqq{}}
 

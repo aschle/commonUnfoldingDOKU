@@ -1,4 +1,4 @@
-\section{Backend und Softwarearchitektur}
+\section{Softwarearchitektur}
 \label{sec:backend}
 
 In diesem Teil der Arbeit wird die technische Umsetzung des Projekts erläutert. Dazu gehören die funktionalen Anforderungen, welche zum größten Teil durch unsere Aufgabenstellung gegeben waren, sowie die Beschreibung der Funktionsweise des Programms. Auf Schwierigkeiten und Herausforderungen bezüglich der technischen Umsetzung und Algorithmen wird näher eingegangen.\\
@@ -25,6 +25,24 @@ Es soll durch den Benutzer ausgewählt werden, welche Schachteln er bearbeiten m
 
 \paragraph{Automatisches Auffüllen}
 Wird an einer Stelle etwas weggenommen, weil es zum Beispiel durch eine andere Fläche übermalt wurde, so sollen automatisch die Zwischenräume mit Farbe aufgefüllt werden.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% WEITERES AN FUNKTIONALITÄT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Weitere Funktionalität}
+\label{subsec:weiteres}
+
+\begin{itemize}
+  \item Zeichnen auch auf Schachteln
+  \item Anzeigen der Curserposition
+  \item Anzeigen eines Grids
+  \item Undo/Redo
+  \item Speichern/Laden
+  \item Zeichendicke und Form
+  \item Rotation
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -127,56 +145,62 @@ Struktur des CommonUnfoldFiles:
 
 Beim Laden einer \texttt{*.cuf} Datei, werden erst die Schachteln erstellt, dann die Startpunkte gesetzt und im Anschluss das Zeichnen simuliert.
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CURSOR %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Cursor auf den anderen Zeichenflächen anzeigen (cursors)}
+\subsubsection{Cursor}
 \label{subsubsec:cursor}
 
-% TODO
-\begin{itemize}
-\item bind von motion auf der Zeichenfläche und den Boxen auf der zeichenfläche:
-kreuz auf der box mit offset erstellen auf einer box: eigen offset
-von aktueller position abziehen und auf zeichenfläche kreuz erstellen,
-dann für alle anderen boxen mit methode von zeichenfläche kreuze berechnen
-\end{itemize}
+Zeichnet man auf der Zeichenfläche wird gleichzeitig auf allen Schachteln die Postion der Maus mit Hilfe eines kleinen Kreuzes angezeigt. Befindet man sich mit der Maus auf einer Schachtel so wird auch diese Position auf allen anderen Schachteln und der Zeichenfläche angezeigt.
+(1) Befindet man sich mit der Maus auf der Zeichenfläche so werden die Kreuze auf den Schachteln mit Hilfe eines Offsets berechnet und erstellt.
+(2) Befindet man sich auf einer Schachtel, so wird der eigene Offset von der aktuellen Position abgezogen und das Kreuz auf der Zeichenfläche erstellt. Alle weiteren Kreuze auf den anderen Schachteln werden nun mit Methode (1) errechnet.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ZEICHNEN AUF BOXEN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CURSOR %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{zeichnen auf den Boxen (draw\_from\_box)}
-\label{subsubsec:zeichenAufBoxen}
+\subsubsection{Zeichnen auf den Schachteln}
+\label{subsubsec:zeichnenaufbox}
 
-\begin{itemize}
-\item rechnet position auf zeichenfläche aus und ruft mit dieser die standart
-drawfunktion auf
-\end{itemize}
+Zusaätzlich zum normalen Zeichen auf der Zeichenfläche kann auf den einzelnen Schachteln auch gezeichnet werden. Die Position auf der Schachtel wird auf die Position auf der Zeichenfläche umgerechten und dort wird dann die standardmäßige Draw-Funktion aufgerufen.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ZEICHENDICKE UND FORM %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{zeichendicke und form (choose\_shape, control\_panel, draw\_with,
-drawing\_canvas.width\_draw)}
+\subsubsection{Zeichendicke und Form}
 \label{subsubsec:zeichendickeForm}
 
-\begin{itemize}
-\item für jeden pixel der fläche wird draw aufgerufen
-\end{itemize}
+Für jeden Punkt der Fläche wird \texttt{draw} aufgerufen.
+[TODO:XXX]
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % GENERIEUNG VON SCHACHTELN UND PREVIEW %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Generierung der Schachteln und Preview}
+\subsubsection{Generierung der Schachteln}
 \label{subsubsec:generierungPreview}
-Muss noch text her! XXX TODO
+Schachteln werden immer über den Flächeninhalt erzeugt. Ist die Dimension einer Schachtel gegeben, so wird im ersten Schritt der Oberflächeninhal (\texttt{calc\_surface\_area} berechnet. Im zweiten Schritt werden alle Schachteln $(a\times b \times c)$ berechnet, welche den gleichen Oberflächeninhalt haben.
 
+\begin{lstlisting}[caption=Generierung von Schachteln]
+# Calculates the surfaceare by edgelenght a,b,c
+def calc_surface_area (a, b, c):
+  return 2 * a * b + 2 * a * c + 2 * b * c
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ROTATION UND GRID %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Rotation und Grid}
-\label{subsubsec:rotationGrid}
-Text XXX TODO
+# Input: surfacearea of a cuboid
+# Returs: all tupel (a,b,c), where a,b,c are the edgelenght beeing in that same equivalence relation
+def create_triple(surface):
+  surface = surface/2
+  tripelList = []
+  for a in range(1, int(sqrt(surface // 3)) + 1):
+    b = a
+    c, rem = divmod(surface - a * b, a + b)
+    while (c >= b):
+      if rem == 0:
+        tripelList.append((a, b, c, 0)) 
+      b = b + 1
+      c, rem = divmod(surface - a * b, a + b)
+  
+  return tripelList
+\end{lstlisting}
