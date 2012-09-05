@@ -120,16 +120,13 @@
 % Keine Ahnung warum, aber "`bla"' funktioniert bei mir nicht.
 \newcommand{\enquote}[1]{\glqq{}#1\grqq{}}
 
-% Abstract
-\renewcommand{\abstractname}{Zusammenfassung}
-
 %URLPROBLEM
 \urldef{\makro}{\url}{http://javascriptmvc.com/docs.html#!jQuery.fn.selection}
 
 % DECKBLATT
 % Titel and author 
 \title{
-  \includegraphics[width=0.6\textwidth]{03_pics/commonUnfold_beispiel1.pdf}\\
+  \includegraphics[width=0.8\textwidth]{03_pics/commonUnfold_beispiel1.pdf}\\
   [4ex]
   {
   \normalsize Softwareprojekt über Anwendung von Algorithmen\\
@@ -143,7 +140,16 @@
   [4ex]
 }
 
-\author{Alexa Schlegel\\\mailto{alexa.schlegel@gmail.com} \and Friedrich Keinhorst\\\mailto{fkeinhorst@gmail.com} \and Henry Dettmer\\\mailto{henrydettmer@gmail.com}\\[4ex]
+\author{
+  \normalsize Alexa Schlegel\\
+  \normalsize \mailto{alexa.schlegel@gmail.com}
+  \and
+  \normalsize Friedrich Keinhorst\\
+  \normalsize \mailto{fkeinhorst@gmail.com}
+  \and
+  \normalsize Henry Dettmer\\
+  \normalsize \mailto{henrydettmer@gmail.com}\\
+  [4ex]
 }
 
 \date{Berlin, \today}
@@ -171,13 +177,6 @@
 \pagenumbering{arabic}
 \pagestyle{fancy}
 \setcounter{page}{1}
-
-\begin{abstract}
-Gegenstand des Projektes, Zielstellung, Umsetzung, Ergebnis, Am Ende
-schreiben.
-\end{abstract}
-\clearpage
-
 
 \input{04_parts/einleitung}
 \clearpage
@@ -211,8 +210,5 @@ schreiben.
 \listoffigures
 \addcontentsline{toc}{section}{Abbildungsverzeichnis}
 \clearpage
-
-\listoftables
-\addcontentsline{toc}{section}{Tabellenverzeichnis}
 
 \end{document}
